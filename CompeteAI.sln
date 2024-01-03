@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompeteAI", "CompeteAI.csproj", "{155E7204-9818-4640-B806-70857ABA05FF}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "CompeteAI", "CompeteAI\CompeteAI.esproj", "{544E634D-9854-42FA-9EF4-16F025D6578F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompeteAiAPI", "CompeteAiAPI\CompeteAiAPI.csproj", "{13F4FD1B-EDB9-4040-A1B6-D23F1B0FC88D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{155E7204-9818-4640-B806-70857ABA05FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{155E7204-9818-4640-B806-70857ABA05FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{155E7204-9818-4640-B806-70857ABA05FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{155E7204-9818-4640-B806-70857ABA05FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{544E634D-9854-42FA-9EF4-16F025D6578F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{13F4FD1B-EDB9-4040-A1B6-D23F1B0FC88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F4FD1B-EDB9-4040-A1B6-D23F1B0FC88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F4FD1B-EDB9-4040-A1B6-D23F1B0FC88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F4FD1B-EDB9-4040-A1B6-D23F1B0FC88D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0C0B2D29-5DA6-453E-8E89-D64782266839}
+		SolutionGuid = {D6A5C6CE-EB5C-4490-8634-7BA55F486581}
 	EndGlobalSection
 EndGlobal
