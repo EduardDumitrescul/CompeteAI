@@ -5,6 +5,8 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { LoginRequest } from './login-request';
 import { LoginResult } from './login-result';
+import { RegisterRequest } from './register-request';
+import { RegisterResult } from './register-result';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +41,17 @@ export class AuthService {
       .pipe(tap(loginResult => {
         if (loginResult.success && loginResult.token) {
           localStorage.setItem(this.tokenKey, loginResult.token);
+          this.setAuthStatus(true);
+        }
+      }));
+  }
+
+  register(item: RegisterRequest): Observable<RegisterResult> {
+    var url = environment.baseUrl + "api/Account/Register";
+    return this.http.post<RegisterResult>(url, item)
+      .pipe(tap(registerResult => {
+        if (registerResult.success && registerResult.token) {
+          localStorage.setItem(this.tokenKey, registerResult.token);
           this.setAuthStatus(true);
         }
       }));

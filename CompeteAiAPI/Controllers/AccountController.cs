@@ -12,16 +12,19 @@ namespace CompeteAiAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtHandler _jwtHandler;
 
         public AccountController(
             ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager, 
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             JwtHandler jwtHandler
             )
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
             _jwtHandler = jwtHandler;
         }
 
@@ -43,6 +46,52 @@ namespace CompeteAiAPI.Controllers
             {
                 Success = true,
                 Message = "Login Successful",
+                Token = jwt
+            });
+        }
+
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        {
+            string role_RegisteredUser = "RegisteredUser";
+
+            if (registerRequest == null)
+            {
+                return Unauthorized(new RegisterResult()
+                {
+                    Success= false,
+                    Message = "Invalid Request",
+                });
+            }
+
+            var user = new ApplicationUser
+            {
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = registerRequest.Email,
+                FirstName = registerRequest.FirstName,
+                LastName = registerRequest.LastName,
+                Email = registerRequest.Email,
+            };
+
+            // insert the user into the DB
+            await _userManager.CreateAsync(user, registerRequest.Password);
+
+            // assign the "RegisteredUser" role
+            await _userManager.AddToRoleAsync(user, role_RegisteredUser);
+
+            // confirm the e-mail and remove lockout
+            user.EmailConfirmed = true;
+            user.LockoutEnabled = false;
+
+
+            var secToken = await _jwtHandler.GetTokenAsync(user);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(secToken);
+
+            return Ok(new LoginResult()
+            {
+                Success = true,
+                Message = "Registration Successful",
                 Token = jwt
             });
         }

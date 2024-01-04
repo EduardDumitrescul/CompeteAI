@@ -16,6 +16,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { RegisterComponent } from './auth/register.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     HomeComponent,
     NavMenuComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

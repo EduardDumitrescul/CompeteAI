@@ -65,6 +65,8 @@ namespace WorldCitiesAPI.Controllers
                 var user_Admin = new ApplicationUser()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
+                    FirstName = "Admin",
+                    LastName = "Admin",
                     UserName = email_Admin,
                     Email = email_Admin,
                 };
@@ -94,6 +96,8 @@ namespace WorldCitiesAPI.Controllers
                 var user_User = new ApplicationUser()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
+                    FirstName = "User", 
+                    LastName = "User",
                     UserName = email_User,
                     Email = email_User
                 };
