@@ -15,14 +15,14 @@ namespace WorldCitiesAPI.Controllers
     public class SeedController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
 
         public SeedController(
             ApplicationDbContext context,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<IdentityRole<int>> roleManager,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment env,
             IConfiguration configuration)
@@ -47,12 +47,12 @@ namespace WorldCitiesAPI.Controllers
             if (await _roleManager.FindByNameAsync(role_RegisteredUser) ==
              null)
                 await _roleManager.CreateAsync(new
-                 IdentityRole(role_RegisteredUser));
+                 IdentityRole<int>(role_RegisteredUser));
 
             if (await _roleManager.FindByNameAsync(role_Administrator) ==
              null)
                 await _roleManager.CreateAsync(new
-                 IdentityRole(role_Administrator));
+                 IdentityRole<int>(role_Administrator));
 
             // create a list to track the newly added users
             var addedUserList = new List<ApplicationUser>();

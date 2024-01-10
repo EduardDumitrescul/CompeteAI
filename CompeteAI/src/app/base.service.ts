@@ -15,7 +15,7 @@ export abstract class BaseService<T> {
     filterColumn: string | null,
     filterQuery: string | null): Observable<ApiResult<T>>;
 
-  abstract get(id: string): Observable<T>;
+  abstract get(id: number): Observable<T>;
   abstract put(item: T): Observable<T>;
   abstract post(item: T): Observable<T>;
 

@@ -14,7 +14,7 @@ namespace CompeteAiAPI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         public UsersController(
-            ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<int>> roleManager)
         {
             _context = context;
             _userManager = userManager;

@@ -39,7 +39,7 @@ export class UserService
     return this.http.get<ApiResult<User>>(url, { params });
   }
 
-  get(id: string): Observable<User> {
+  get(id: number): Observable<User> {
     var url = this.getUrl("api/Users/" + id);
     return this.http.get<User>(url);
   }
