@@ -4,6 +4,7 @@ import { BaseService, ApiResult } from '../base.service';
 import { Observable } from 'rxjs';
 
 import { Tournament } from './tournament';
+import { User } from '../leaderboard/user';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,11 @@ export class TournamentService
   get(id: number): Observable<Tournament> {
     var url = this.getUrl("api/Tournament/" + id);
     return this.http.get<Tournament>(url);
+  }
+
+  getCurrentUser(): Observable<User> {
+    var url = this.getUrl("api/Users/CurrentUser");
+    return this.http.get<User>(url);
   }
 
   put(item: Tournament): Observable<Tournament> {

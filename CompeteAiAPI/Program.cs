@@ -4,6 +4,7 @@ using CompeteAiAPI.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
            builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
 {
+    options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier;
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;

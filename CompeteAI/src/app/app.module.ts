@@ -19,6 +19,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { RegisterComponent } from './auth/register.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
+import { TournamentEditComponent } from './tournaments/tournament-edit/tournament-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TournamentsComponent } from './tournaments/tournaments.component';
     RegisterComponent,
     LeaderboardComponent,
     TournamentsComponent,
+    TournamentEditComponent,
   ],
   imports: [
     BrowserModule,

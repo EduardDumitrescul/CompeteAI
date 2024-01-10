@@ -1,0 +1,92 @@
+<div class="tournament-edit">
+  <h1>{{title}}</h1>
+  <p *ngIf="this.id && !tournament"><em>Loading...</em></p>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Name -->
+    <mat-form-field>
+      <mat-label>Name:</mat-label>
+      <input matInput formControlName="name" required
+             placeholder="Type a name">
+      <mat-error *ngFor="let error of getErrors(form.get('name')!,
+          'Name')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Game -->
+    <mat-form-field>
+      <mat-label>Game:</mat-label>
+      <input matInput formControlName="game" required
+             placeholder="Insert game">
+      <mat-error *ngFor="let error of getErrors(form.get('game')!,
+      'Game')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- StartDate -->
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="startDate" required placeholder="Select Start Date">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field>
+      <mat-label>Write a description...</mat-label>
+      <input matInput formControlName="description" required
+             placeholder="Write a description...">
+      <mat-error *ngFor="let error of getErrors(form.get('description')!,
+          'Description')">
+        {{error}}
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button mat-flat-button color="primary"
+              type="submit"
+              [disabled]="!form.valid">
+        {{ this.id ? "Save" : "Create" }}
+      </button>
+      <button mat-flat-button color="secondary"
+              [routerLink]="['/tournaments']">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Form debug info panel -->
+<div class="info">
+  <div class="info-header">Form Debug Info</div>
+  <div class="info-body">
+    <div class="info-label">
+      Form Value:
+    </div>
+    <div class="info-value">
+      {{ form.value | json }}
+    </div>
+    <hr />
+    <div class="info-label">
+      Form Status:
+    </div>
+    <div class="info-value">
+      {{ form.status | json }}
+    </div>
+  </div>
+</div>
+
+<!-- Form activity log panel -->
+<div class="info">
+  <div class="info-header">Form Activity Log</div>
+  <div class="info-body">
+    <div class="info-value">
+      <span *ngIf="activityLog"
+            [innerHTML]="activityLog">
+      </span>
+    </div>
+  </div>
+</div>

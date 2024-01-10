@@ -3,6 +3,7 @@ using CompeteAiAPI.Data.DTO;
 using CompeteAiAPI.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CompeteAiAPI.Controllers
 {
@@ -12,9 +13,10 @@ namespace CompeteAiAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UsersController(
-            ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<int>> roleManager)
+            ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<int>> roleManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _userManager = userManager;
@@ -59,5 +61,7 @@ namespace CompeteAiAPI.Controllers
                     filterColumn,
                     filterQuery);
         }
-    }
+
+       
+    } 
 }

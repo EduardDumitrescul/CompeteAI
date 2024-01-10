@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompeteAiAPI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240110101702_Initial")]
+    [Migration("20240110164934_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

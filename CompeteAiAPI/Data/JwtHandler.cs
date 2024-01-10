@@ -47,6 +47,7 @@ namespace CompeteAiAPI.Data
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), 
                 new Claim(ClaimTypes.Name, user.Email)
             };
 
