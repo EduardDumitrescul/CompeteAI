@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RegisterComponent } from './auth/register.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { TournamentsComponent } from './tournaments/tournaments.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { RegisterComponent } from './auth/register.component';
     NavMenuComponent,
     LoginComponent,
     RegisterComponent,
+    LeaderboardComponent,
+    TournamentsComponent,
   ],
   imports: [
     BrowserModule,

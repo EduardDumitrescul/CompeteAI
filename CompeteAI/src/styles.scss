@@ -21,6 +21,10 @@ table {
       background-color: #f4f4f4;
     }
 
+    &:nth-child(odd) {
+      background-color: #fefefe;
+    }
+
     th, td {
       text-align: left;
       padding: 5px 10px;
