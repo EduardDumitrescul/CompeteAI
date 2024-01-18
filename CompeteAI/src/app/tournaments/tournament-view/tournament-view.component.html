@@ -1,0 +1,29 @@
+<div class="tournament-view">
+  <h1>{{title}}</h1>
+  <p *ngIf="!tournament || !currentUser"><em>Loading...</em></p>
+
+  <div *ngIf="tournament && currentUser">
+    <h4>Game: <b>{{tournament.game}}</b></h4>
+    <h4>Starts on: <b>{{tournament.startDate}}</b></h4>
+    <h4>Description:</h4>
+    <p>{{tournament.description}}</p>
+
+    <div>
+      <button *ngIf="currentUser.id == tournament.hostId"
+              mat-flat-button color="primary"
+              [routerLink]="['/tournament', tournament.id, 'edit']">
+        Edit
+      </button>
+      <button *ngIf="currentUser.id != tournament.hostId"
+              mat-flat-button color="primary">
+        Join
+      </button>
+      <button mat-flat-button color="secondary"
+              [routerLink]="['/tournaments']">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  
+</div>

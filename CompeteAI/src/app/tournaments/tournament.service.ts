@@ -4,7 +4,7 @@ import { BaseService, ApiResult } from '../base.service';
 import { Observable } from 'rxjs';
 
 import { Tournament } from './tournament';
-import { User } from '../leaderboard/user';
+import { User } from '../user';
 
 @Injectable({
   providedIn: 'root',

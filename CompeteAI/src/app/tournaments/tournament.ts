@@ -1,4 +1,4 @@
-import { User } from "../leaderboard/user";
+import { User } from "../user";
 
 export interface Tournament {
   id: number;
@@ -6,6 +6,6 @@ export interface Tournament {
   game: string;
   startDate: Date;
   description: string;
-  hostId: string;
+  hostId: number;
   host: User;
 }

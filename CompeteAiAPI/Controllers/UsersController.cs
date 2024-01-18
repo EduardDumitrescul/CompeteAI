@@ -1,6 +1,7 @@
 ﻿using CompeteAiAPI.Data;
 using CompeteAiAPI.Data.DTO;
 using CompeteAiAPI.Data.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,11 +13,14 @@ namespace CompeteAiAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UsersController(
-            ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<int>> roleManager, IHttpContextAccessor httpContextAccessor)
+            ApplicationDbContext context, 
+            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, 
+            Microsoft.AspNetCore.Identity.RoleManager<IdentityRole<int>> roleManager, 
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _userManager = userManager;
@@ -33,6 +37,22 @@ namespace CompeteAiAPI.Controllers
         //        Lastname = user.LastName,
         //    }) ;
         //}
+
+        [HttpGet("CurrentUser")]
+        public async Task<ActionResult<ApplicationUser>> GetCurrentUser()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                // Get the user's ID
+                var currentUser = await this._userManager.FindByIdAsync(User.Identity.GetUserId());
+                return currentUser;
+            }
+            else
+            {
+                Console.WriteLine("not auth");
+                return Unauthorized();
+            }
+        }
 
         [HttpGet]
         public async Task<ActionResult<ApiResult<UserDto>>> GetUsers(

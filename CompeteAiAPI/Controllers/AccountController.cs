@@ -3,6 +3,7 @@ using CompeteAiAPI.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CompeteAiAPI.Controllers
 {
@@ -27,6 +28,8 @@ namespace CompeteAiAPI.Controllers
             _roleManager = roleManager;
             _jwtHandler = jwtHandler;
         }
+
+        
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginRequest loginRequest)

@@ -7,8 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { User } from './user';
-import { UserService } from './user.service';
+import { User } from './../user';
+import { UserService } from './../user.service';
 import { ApiResult } from '../base.service';
 
 @Component({

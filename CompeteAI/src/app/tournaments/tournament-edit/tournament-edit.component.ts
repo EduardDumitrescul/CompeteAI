@@ -124,12 +124,10 @@ export class TournamentEditComponent
     if (this.id) {
       // EDIT MODE
 
-      // fetch the city from the server
       this.tournamentService.get(this.id).subscribe(result => {
         this.tournament = result;
         this.title = "Edit Tournament - " + this.tournament.name;
 
-        // update the form with the city value
         this.form.patchValue(this.tournament);
       }, error => console.error(error));
     }
