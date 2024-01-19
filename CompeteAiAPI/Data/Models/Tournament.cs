@@ -25,8 +25,11 @@ namespace CompeteAiAPI.Data.Models
         public string Description { get; set; }
 
         [ForeignKey(nameof(ApplicationUser))]
-        public int HostId { get; set; }
+        public int? HostId { get; set; }
 
         public ApplicationUser? Host { get; set; } = null!;
+
+        public ICollection<Participation> Participations { get; } = [];
+
     }
 }

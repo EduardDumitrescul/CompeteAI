@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompeteAiAPI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240110164934_Initial")]
+    [Migration("20240119102348_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -99,6 +99,23 @@ namespace CompeteAiAPI.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("CompeteAiAPI.Data.Models.Participation", b =>
+                {
+                    b.Property<int?>("RegisteredUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegisteredTournamentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RegisteredUserId", "RegisteredTournamentId");
+
+                    b.HasIndex("RegisteredTournamentId");
+
+                    b.HasIndex("RegisteredUserId");
+
+                    b.ToTable("Participations");
+                });
+
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Tournament", b =>
                 {
                     b.Property<int>("Id")
@@ -115,7 +132,7 @@ namespace CompeteAiAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("HostId")
+                    b.Property<int?>("HostId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -271,13 +288,30 @@ namespace CompeteAiAPI.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CompeteAiAPI.Data.Models.Participation", b =>
+                {
+                    b.HasOne("CompeteAiAPI.Data.Models.Tournament", "RegisteredTournament")
+                        .WithMany("Participations")
+                        .HasForeignKey("RegisteredTournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CompeteAiAPI.Data.Models.ApplicationUser", "RegisteredUser")
+                        .WithMany("Participations")
+                        .HasForeignKey("RegisteredUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RegisteredTournament");
+
+                    b.Navigation("RegisteredUser");
+                });
+
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Tournament", b =>
                 {
                     b.HasOne("CompeteAiAPI.Data.Models.ApplicationUser", "Host")
                         .WithMany()
-                        .HasForeignKey("HostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HostId");
 
                     b.Navigation("Host");
                 });
@@ -331,6 +365,16 @@ namespace CompeteAiAPI.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CompeteAiAPI.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Participations");
+                });
+
+            modelBuilder.Entity("CompeteAiAPI.Data.Models.Tournament", b =>
+                {
+                    b.Navigation("Participations");
                 });
 #pragma warning restore 612, 618
         }

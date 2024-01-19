@@ -170,7 +170,7 @@ namespace CompeteAiAPI.Data.Migrations
                     Game = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HostId = table.Column<int>(type: "int", nullable: false)
+                    HostId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -179,6 +179,29 @@ namespace CompeteAiAPI.Data.Migrations
                         name: "FK_Tournaments_AspNetUsers_HostId",
                         column: x => x.HostId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Participations",
+                columns: table => new
+                {
+                    RegisteredUserId = table.Column<int>(type: "int", nullable: false),
+                    RegisteredTournamentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Participations", x => new { x.RegisteredUserId, x.RegisteredTournamentId });
+                    table.ForeignKey(
+                        name: "FK_Participations_AspNetUsers_RegisteredUserId",
+                        column: x => x.RegisteredUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Participations_Tournaments_RegisteredTournamentId",
+                        column: x => x.RegisteredTournamentId,
+                        principalTable: "Tournaments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -223,6 +246,16 @@ namespace CompeteAiAPI.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Participations_RegisteredTournamentId",
+                table: "Participations",
+                column: "RegisteredTournamentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participations_RegisteredUserId",
+                table: "Participations",
+                column: "RegisteredUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tournaments_Game",
                 table: "Tournaments",
                 column: "Game");
@@ -262,10 +295,13 @@ namespace CompeteAiAPI.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Tournaments");
+                name: "Participations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Tournaments");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

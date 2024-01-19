@@ -16,5 +16,7 @@ namespace CompeteAiAPI.Data
 
 
         public DbSet<Tournament> Tournaments => Set<Tournament>();
+
+        public DbSet<Participation> Participations => Set<Participation>();
     }
 }
