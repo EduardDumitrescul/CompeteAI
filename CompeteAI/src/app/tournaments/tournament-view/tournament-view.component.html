@@ -15,8 +15,9 @@
         Edit
       </button>
       <button *ngIf="currentUser.id != tournament.hostId"
-              mat-flat-button color="primary">
-        Join
+              mat-flat-button color="primary"
+              (click)="join()">
+        {{userIsRegistered ? "Unregister" : "Join Tournament"}}
       </button>
       <button mat-flat-button color="secondary"
               [routerLink]="['/tournaments']">

@@ -60,6 +60,32 @@ export class TournamentService
     return this.http.post<Tournament>(url, item);
   }
 
+  registerUser(userId: number, tournamentId: number): Observable<string>  {
+    var url = this.getUrl("api/Participation/RegisterUser");
+    var params = new HttpParams()
+      .set("userId", userId)
+      .set("tournamentId", tournamentId);
+
+    return this.http.put<string>(url, null, { params });
+  }
+
+  unregisterUser(userId: number, tournamentId: number): Observable<string> {
+    var url = this.getUrl("api/Participation/UnregisterUser");
+    var params = new HttpParams()
+      .set("userId", userId)
+      .set("tournamentId", tournamentId);
+
+    return this.http.put<string>(url, null, { params });
+  }
+
+  userIsRegistered(userId: number, tournamentId: number): Observable<Boolean> {
+    var url = this.getUrl("api/Participation/IsUserRegistered");
+    var params = new HttpParams()
+      .set("userId", userId)
+      .set("tournamentId", tournamentId);
+    return this.http.get<boolean>(url, { params });
+  }
+
   getTournaments(
     pageIndex: number,
     pageSize: number,
