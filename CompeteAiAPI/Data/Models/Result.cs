@@ -14,9 +14,11 @@ namespace CompeteAiAPI.Data.Models
 
         public int Wins { get; set; } = 0;
 
-        [ForeignKey(nameof(Participation))]
-        public int ParticipationId { get; set; }
+        public int RegisteredUserId { get; set; }
 
-        public Participation? Participation { get; set; } = null!;
+        public int RegisteredTournamentId { get; set; }
+
+        [ForeignKey("RegisteredUserId, RegisteredTournamentId")]
+        public Participation Participation { get; set; } = null!;
     }
 }
