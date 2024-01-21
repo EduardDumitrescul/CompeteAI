@@ -335,7 +335,7 @@ namespace CompeteAiAPI.Data.Migrations
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Result", b =>
                 {
                     b.HasOne("CompeteAiAPI.Data.Models.Participation", "Participation")
-                        .WithOne("Result")
+                        .WithOne("ParticipationResult")
                         .HasForeignKey("CompeteAiAPI.Data.Models.Result", "RegisteredUserId", "RegisteredTournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -410,7 +410,7 @@ namespace CompeteAiAPI.Data.Migrations
 
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Participation", b =>
                 {
-                    b.Navigation("Result")
+                    b.Navigation("ParticipationResult")
                         .IsRequired();
                 });
 

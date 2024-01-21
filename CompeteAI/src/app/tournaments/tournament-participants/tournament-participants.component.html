@@ -1,0 +1,50 @@
+<h1>Tournament Participants</h1>
+
+
+<p *ngIf="!participants"><em>Loading...</em></p>
+
+<mat-form-field [hidden]="!participants">
+  <input matInput #filter (keyup)="onFilterTextChanged(filter.value)"
+         placeholder="Filter by name (or part of it)...">
+</mat-form-field>
+
+<table mat-table [dataSource]="participants"
+       class="mat-elevation-z8"
+       [hidden]="!participants"
+       matSort (matSortChange)="loadData()"
+       [matSortActive]="defaultSortColumn"
+       [matSortDirection]="defaultSortOrder">
+
+
+  <!-- Username Column -->
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+    <td mat-cell *matCellDef="let participant">
+        {{participant.username}}
+    </td>
+  </ng-container>
+
+  <!-- Wins Column -->
+  <ng-container matColumnDef="wins">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Wins</th>
+    <td mat-cell *matCellDef="let participant">{{participant.wins}}</td>
+  </ng-container>
+
+  <!-- Rounds Column -->
+  <ng-container matColumnDef="rounds">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rounds</th>
+    <td mat-cell *matCellDef="let participant">{{participant.rounds}}</td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!participants"
+               (page)="getData($event)"
+               [pageSize]="10"
+               [pageSizeOptions]="[10, 20, 50]"
+               showFirstLastButtons></mat-paginator>

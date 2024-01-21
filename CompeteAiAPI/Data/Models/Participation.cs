@@ -23,7 +23,7 @@ namespace CompeteAiAPI.Data.Models
 
         public Tournament? RegisteredTournament { get; set; } = null!;
 
-        public Result Result { get; set; }
+        public Result ParticipationResult { get; set; }
     }
 
 }

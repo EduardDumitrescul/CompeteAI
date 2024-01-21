@@ -14,6 +14,11 @@
               [routerLink]="['/tournament', tournament.id, 'edit']">
         Edit
       </button>
+      <button *ngIf="currentUser.id == tournament.hostId"
+              mat-flat-button color="primary"
+              [routerLink]="['/tournament', tournament.id, 'participants']">
+        View Participants
+      </button>
       <button *ngIf="currentUser.id != tournament.hostId"
               mat-flat-button color="primary"
               (click)="join()">

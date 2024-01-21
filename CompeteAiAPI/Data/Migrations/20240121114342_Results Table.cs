@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CompeteAiAPI.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ResultsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -206,6 +206,28 @@ namespace CompeteAiAPI.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Results",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoundsPlayed = table.Column<int>(type: "int", nullable: false),
+                    Wins = table.Column<int>(type: "int", nullable: false),
+                    RegisteredUserId = table.Column<int>(type: "int", nullable: false),
+                    RegisteredTournamentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Results", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Results_Participations_RegisteredUserId_RegisteredTournamentId",
+                        columns: x => new { x.RegisteredUserId, x.RegisteredTournamentId },
+                        principalTable: "Participations",
+                        principalColumns: new[] { "RegisteredUserId", "RegisteredTournamentId" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -256,6 +278,12 @@ namespace CompeteAiAPI.Data.Migrations
                 column: "RegisteredUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Results_RegisteredUserId_RegisteredTournamentId",
+                table: "Results",
+                columns: new[] { "RegisteredUserId", "RegisteredTournamentId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tournaments_Game",
                 table: "Tournaments",
                 column: "Game");
@@ -295,10 +323,13 @@ namespace CompeteAiAPI.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Participations");
+                name: "Results");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Participations");
 
             migrationBuilder.DropTable(
                 name: "Tournaments");

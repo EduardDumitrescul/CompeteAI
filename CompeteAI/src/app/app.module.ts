@@ -21,6 +21,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
 import { TournamentEditComponent } from './tournaments/tournament-edit/tournament-edit.component';
 import { TournamentViewComponent } from './tournaments/tournament-view/tournament-view.component';
+import { TournamentParticipantsComponent } from './tournaments/tournament-participants/tournament-participants.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TournamentViewComponent } from './tournaments/tournament-view/tournamen
     TournamentsComponent,
     TournamentEditComponent,
     TournamentViewComponent,
+    TournamentParticipantsComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompeteAiAPI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240120142449_Results Table2")]
-    partial class ResultsTable2
+    [Migration("20240121114342_Results Table")]
+    partial class ResultsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -338,7 +338,7 @@ namespace CompeteAiAPI.Data.Migrations
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Result", b =>
                 {
                     b.HasOne("CompeteAiAPI.Data.Models.Participation", "Participation")
-                        .WithOne("Result")
+                        .WithOne("ParticipationResult")
                         .HasForeignKey("CompeteAiAPI.Data.Models.Result", "RegisteredUserId", "RegisteredTournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -413,7 +413,7 @@ namespace CompeteAiAPI.Data.Migrations
 
             modelBuilder.Entity("CompeteAiAPI.Data.Models.Participation", b =>
                 {
-                    b.Navigation("Result")
+                    b.Navigation("ParticipationResult")
                         .IsRequired();
                 });
 
