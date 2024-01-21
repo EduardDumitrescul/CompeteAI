@@ -6,6 +6,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TournamentService } from '../tournament.service';
 import { TournamentParticipation } from './tournament-participation';
 import { ParticipationService } from '../partcipation-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tournament-participants',
@@ -15,6 +16,7 @@ import { ParticipationService } from '../partcipation-service';
 export class TournamentParticipantsComponent {
   public displayedColumns: string[] = ['username', 'wins', 'rounds'];
 
+  public tournamentId?: number;
   public participants!: MatTableDataSource<TournamentParticipation>;
 
   defaultPageIndex: number = 0;
@@ -30,8 +32,10 @@ export class TournamentParticipantsComponent {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private tournamentService: TournamentService,
-  private participationService: ParticipationService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private tournamentService: TournamentService,
+    private participationService: ParticipationService) {
   }
 
   ngOnInit() {
@@ -76,7 +80,11 @@ export class TournamentParticipantsComponent {
       ? this.filterQuery
       : null;
 
-    this.participationService.getData(
+    var idParam = this.activatedRoute.snapshot.paramMap.get('id');
+    this.tournamentId = idParam ? +idParam : 0;
+
+    this.participationService.getTournamentParticipations(
+      this.tournamentId,
       event.pageIndex,
       event.pageSize,
       sortColumn,
