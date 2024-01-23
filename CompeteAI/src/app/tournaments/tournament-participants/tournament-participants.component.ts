@@ -22,7 +22,7 @@ export class TournamentParticipantsComponent {
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
   public defaultSortColumn: string = "wins";
-  public defaultSortOrder: "asc" | "desc" = "asc";
+  public defaultSortOrder: "asc" | "desc" = "desc";
 
   defaultFilterColumn: string = "name";
   filterQuery?: string;

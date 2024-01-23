@@ -24,7 +24,42 @@ namespace CompeteAiAPI.Controllers
         {
             _context.Results.Add(result);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetCity", new { id = result.Id }, result);
+            return CreatedAtAction("GetResult", new { id = result.Id }, result);
+        }
+
+        [HttpPut("AddWin")]
+        public async Task<ActionResult<Result>> AddWin(int userId, int tournamentId)
+        {
+            var result = _context.Results
+                .FirstOrDefault(x => x.RegisteredUserId == userId && x.RegisteredTournamentId == tournamentId);
+          
+            if(result != null)
+            {
+                result.Wins += 1;
+                result.RoundsPlayed += 1;
+                _context.Entry(result).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetResult", new { id = result.Id }, result);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPut("AddLoss")]
+        public async Task<ActionResult<Result>> AddLoss(int userId, int tournamentId)
+        {
+            var result = _context.Results
+                .FirstOrDefault(x => x.RegisteredUserId == userId && x.RegisteredTournamentId == tournamentId);
+
+            if (result != null)
+            {
+                result.RoundsPlayed += 1;
+                _context.Entry(result).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetResult", new { id = result.Id }, result);
+            }
+
+            return NotFound();
         }
 
 

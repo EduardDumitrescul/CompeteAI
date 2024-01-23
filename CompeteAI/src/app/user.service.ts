@@ -59,4 +59,9 @@ export class UserService
     return this.http.get<User>(url);
   }
 
+  currentUserIsAdmin(): Observable<boolean> {
+    var url = this.getUrl("api/Users/CurrentUserIsAdmin");
+    return this.http.get<boolean>(url);
+  }
+
 }

@@ -14,6 +14,7 @@ import { Observable, forkJoin, switchMap } from 'rxjs';
 export class TournamentViewComponent implements OnInit {
   tournament?: Tournament;
   currentUser?: User;
+  currentUserIdAdmin?: boolean;
   userIsRegistered?: Boolean;
   id?: number;
   title?: string;
@@ -38,13 +39,15 @@ export class TournamentViewComponent implements OnInit {
     
     forkJoin([
       this.tournamentService.get(this.id),
-      this.userService.currentUser()
+      this.userService.currentUser(),
+      this.userService.currentUserIsAdmin(),
     ])
       .pipe(
-        switchMap(([tournamentResult, currentUserResult]) => {
+        switchMap(([tournamentResult, currentUserResult, isAdmin]) => {
           this.tournament = tournamentResult;
           this.title = this.tournament.name;
           this.currentUser = currentUserResult;
+          this.currentUserIdAdmin = isAdmin;
 
           // Now that the first two functions are completed, call the third one
           return this.tournamentService.userIsRegistered(this.currentUser.id, this.tournament.id);
@@ -74,6 +77,24 @@ export class TournamentViewComponent implements OnInit {
       });
     }
     window.location.reload();
+  }
+
+  addWin() {
+    if (this.currentUser == undefined || this.tournament == undefined) {
+      return;
+    }
+    this.tournamentService.addWin(this.currentUser.id, this.tournament.id).subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  addLoss() {
+    if (this.currentUser == undefined || this.tournament == undefined) {
+      return;
+    }
+    this.tournamentService.addLoss(this.currentUser.id, this.tournament.id).subscribe(res => {
+      console.log(res);
+    })
   }
 
 }

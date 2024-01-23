@@ -3,6 +3,6 @@ export interface TournamentParticipation {
   tournamentId: number;
   resultId: number;
   username: string;
-  roundsPlayed: number;
+  rounds: number;
   wins: number;
 }

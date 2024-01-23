@@ -71,7 +71,7 @@ namespace CompeteAiAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutTournament(int id, Tournament tournament)
         {
             if (id != tournament.Id)

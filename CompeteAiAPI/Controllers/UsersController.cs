@@ -53,6 +53,24 @@ namespace CompeteAiAPI.Controllers
                 return Unauthorized();
             }
         }
+        [HttpGet("CurrentUserIsAdmin")]
+        public async Task<ActionResult<bool>> CurrentUserIsAdmin()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await this._userManager.FindByIdAsync(User.Identity.GetUserId());
+                if(currentUser == null )
+                {
+                    return false;
+                }
+                return await this._userManager.IsInRoleAsync(currentUser, "Administrator");
+            }
+            else
+            {
+                Console.WriteLine("not auth");
+                return Unauthorized();
+            }
+        }
 
         [HttpGet]
         public async Task<ActionResult<ApiResult<UserDto>>> GetUsers(

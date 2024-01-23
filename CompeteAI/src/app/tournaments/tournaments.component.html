@@ -3,7 +3,8 @@
 
 <p *ngIf="!tournaments"><em>Loading...</em></p>
 
-<button mat-flat-button color="primary"
+<button *ngIf="currentUserIsAdmin"
+        mat-flat-button color="primary"
         class="btn-add" [routerLink]="['/tournament']">
   Add a new Tournament
 </button>

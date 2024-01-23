@@ -29,6 +29,18 @@
         Cancel
       </button>
     </div>
+
+    <div *ngIf="userIsRegistered">
+      <button mat-flat-button color="secondary"
+              (click)="addWin()">
+        Add Win
+      </button>
+      <button mat-flat-button color="secondary"
+              (click)="addLoss()">
+        Add Loss
+      </button>
+    </div>
+
   </div>
 
   

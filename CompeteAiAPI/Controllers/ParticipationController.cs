@@ -92,6 +92,7 @@ namespace CompeteAiAPI.Controllers
                         {
                            UserId = c.RegisteredUserId,
                            TournamentId = c.RegisteredTournamentId,
+                           Username = c.RegisteredUser.UserName,
                            ResultId = c.ParticipationResult.Id,
                            RoundsPlayed = c.ParticipationResult.RoundsPlayed,
                            Wins = c.ParticipationResult.Wins,

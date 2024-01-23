@@ -10,6 +10,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Tournament } from './tournament';
 import { TournamentService } from './tournament.service';
 import { ApiResult } from '../base.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-tournament',
@@ -19,6 +20,9 @@ import { ApiResult } from '../base.service';
 export class TournamentsComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'game', 'startDate', 'host'];
   public tournaments!: MatTableDataSource<Tournament>;
+
+
+  currentUserIsAdmin?: boolean;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -33,7 +37,9 @@ export class TournamentsComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  constructor(private tournamentService: TournamentService) {
+  constructor(
+    private tournamentService: TournamentService,
+  private userService: UserService) {
   }
 
   ngOnInit() {
@@ -93,6 +99,10 @@ export class TournamentsComponent implements OnInit {
         this.paginator.pageSize = result.pageSize;
         this.tournaments = new MatTableDataSource<Tournament>(result.data);
       }, error => console.error(error));
+
+    this.userService.currentUserIsAdmin().subscribe(result => {
+      this.currentUserIsAdmin = result;
+    })
   }
 }
 

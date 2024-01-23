@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { Tournament } from './tournament';
 import { User } from '../user';
+import { Result } from './result';
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +77,24 @@ export class TournamentService
       .set("tournamentId", tournamentId);
 
     return this.http.put<string>(url, null, { params });
+  }
+
+  addWin(userId: number, tournamentId: number): Observable<Result> {
+    var url = this.getUrl("api/Result/AddWin");
+    var params = new HttpParams()
+      .set("userId", userId)
+      .set("tournamentId", tournamentId);
+
+    return this.http.put<Result>(url, null, { params });
+  }
+
+  addLoss(userId: number, tournamentId: number): Observable<Result> {
+    var url = this.getUrl("api/Result/AddLoss");
+    var params = new HttpParams()
+      .set("userId", userId)
+      .set("tournamentId", tournamentId);
+
+    return this.http.put<Result>(url, null, { params });
   }
 
   userIsRegistered(userId: number, tournamentId: number): Observable<Boolean> {
