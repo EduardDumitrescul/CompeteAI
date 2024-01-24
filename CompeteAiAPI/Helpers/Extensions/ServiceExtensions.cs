@@ -13,5 +13,14 @@ namespace CompeteAiAPI.Helpers.Extensions
 
             return services;
         }
+        public static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            services.AddTransient<UserService>();
+            services.AddTransient<ParticipationService>();
+            services.AddTransient<ResultService>();
+            services.AddTransient<TournamentService>();
+
+            return services;
+        }
     }
 }

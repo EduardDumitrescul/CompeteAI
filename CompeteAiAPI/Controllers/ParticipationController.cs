@@ -11,15 +11,15 @@ namespace CompeteAiAPI.Controllers
     [Route("api/[controller]")]
     public class ParticipationController : ControllerBase
     {
-        private readonly ParticipationRepository _participationRepository;
-        private readonly ResultRepository _resultRepository;
+        private readonly ParticipationService _participationService;
+        private readonly ResultService _resultService;
         public ParticipationController(
-            ParticipationRepository participationRepository,
-            ResultRepository resultRepository
+            ParticipationService participationService,
+            ResultService resultService
             )
         {
-            _participationRepository = participationRepository;
-            _resultRepository = resultRepository;
+            _participationService = participationService;
+            _resultService = resultService;
         }
 
         [HttpPut("RegisterUser")]
@@ -46,8 +46,8 @@ namespace CompeteAiAPI.Controllers
                 ParticipationResult = result
             };
 
-            this._participationRepository.add(p);
-            this._resultRepository.add(result);
+            this._participationService.add(p);
+            this._resultService.add(result);
             return Ok("User registered");
         }
 
@@ -66,14 +66,14 @@ namespace CompeteAiAPI.Controllers
                 RegisteredTournamentId = tournamentId
             };
 
-            this._participationRepository.remove(p);
+            this._participationService.remove(p);
             return Ok("User junregistered");
         }
 
         [HttpGet("IsUserRegistered")]
         public async Task<bool> UserIsRegistered(int userId, int tournamentId)
         {
-            return this._participationRepository.userIsRegistered(userId, tournamentId);
+            return this._participationService.userIsRegistered(userId, tournamentId);
         }
 
         [HttpGet("Tournament")]
@@ -88,7 +88,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<ParticipationDTO>.CreateAsync(
-                   this._participationRepository.getByTournament(tournamentId)
+                   this._participationService.getByTournament(tournamentId)
                         .Select(c => new ParticipationDTO()
                         {
                            UserId = c.RegisteredUserId,
@@ -119,7 +119,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<ParticipationDTO>.CreateAsync(
-                    this._participationRepository.getAll()
+                    this._participationService.getAll()
                         .Select(c => new ParticipationDTO()
                         {
                             UserId = c.RegisteredUserId,

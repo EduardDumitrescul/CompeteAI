@@ -13,14 +13,14 @@ namespace CompeteAiAPI.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
+        private readonly UserService _userService;
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
 
         public UsersController(
-            UserRepository userRepository,
+            UserService userService,
             Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
         {
-            _userRepository = userRepository;
+            _userService = userService;
             _userManager = userManager;
         }
 
@@ -82,7 +82,7 @@ namespace CompeteAiAPI.Controllers
             List<ApplicationUser> users = _userManager.Users.ToList();
 
             return await ApiResult<UserDto>.CreateAsync(
-                   _userRepository.getAll()
+                   _userService.getAll()
                         .Select(c => new UserDto()
                         {
                             Id = c.Id,

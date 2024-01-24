@@ -17,14 +17,14 @@ namespace CompeteAiAPI.Controllers
     public class TournamentController : ControllerBase
     {
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
-        private readonly TournamentRepository _tournamentRepository;
+        private readonly TournamentService _tournamentService;
 
         public TournamentController(
            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
-           TournamentRepository tournamentRepository)
+           TournamentService tournamentService)
         {
             _userManager = userManager;
-            _tournamentRepository = tournamentRepository;
+            _tournamentService = tournamentService;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<TournamentDTO>.CreateAsync(
-                   _tournamentRepository.getAll()
+                   _tournamentService.getAll()
                         .Select(c => new TournamentDTO()
                         {
                             Id = c.Id,
@@ -60,7 +60,7 @@ namespace CompeteAiAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tournament>> GetTournament(int id)
         {
-            var city = _tournamentRepository.get(id);
+            var city = _tournamentService.get(id);
 
             if (city == null)
             {
@@ -94,7 +94,7 @@ namespace CompeteAiAPI.Controllers
                 return Unauthorized();
             }
 
-            _tournamentRepository.update(tournament);
+            _tournamentService.update(tournament);
 
             
 
@@ -111,7 +111,7 @@ namespace CompeteAiAPI.Controllers
            
 
 
-           _tournamentRepository.add(tournament);
+           _tournamentService.add(tournament);
 
             return CreatedAtAction("GetTournament", new { id = tournament.Id }, tournament);
         }
@@ -120,14 +120,14 @@ namespace CompeteAiAPI.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteTournament(int id)
         {
-           _tournamentRepository.delete(id);
+           _tournamentService.delete(id);
 
             return NoContent();
         }
 
         private bool TournamentExists(int id)
         {
-            return _tournamentRepository.get(id) != null;   
+            return _tournamentService.get(id) != null;   
         }
     }
 }

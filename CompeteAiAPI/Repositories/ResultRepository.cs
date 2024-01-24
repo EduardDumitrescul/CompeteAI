@@ -33,6 +33,7 @@ namespace CompeteAiAPI.Repositories
         public void update(Result result)
         {
             _context.Results.Update(result);
+            _context.SaveChanges();
 
         }
 

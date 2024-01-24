@@ -27,9 +27,9 @@ namespace CompeteAiAPI.Repositories
             _context.SaveChanges();
         }
 
-        public bool userIsRegistered(int userId, int tournamentId)
+        public Participation? getByUserAndTournament(int userId, int tournamentId)
         {
-            return null != _context.Participations.Find(userId, tournamentId);
+            return _context.Participations.Find(userId, tournamentId);
         }
 
         public IQueryable<Participation> getByTournament(int tournamentId)

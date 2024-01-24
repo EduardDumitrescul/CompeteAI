@@ -22,6 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 builder.Services.AddRepositories();
+builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
