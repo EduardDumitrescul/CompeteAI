@@ -2,10 +2,10 @@
 Backend: (4 pct)
 
 Orice numar se specifica in cerinte se inmulteste cu numarul de coechipieri (pentru nota 10 fiecare trebuie sa faca toate cerintele in proiect)
- -3 Controllere (minim); Fiecare Metoda Crud, REST cu date din baza de date. (1p)
- -Cel puțin 1 relație între tabele din fiecare fel (One to One, Many to Many, One to Many); Folosirea metodelor din Linq: GroupBy, Where, etc; Folosirea Join si Include (1p)
- -Autentificare + Roluri; Autorizare pe endpointuri în funcție de Roluri; Cel putin 2 Roluri: Admin, User 
- -Sa se foloseasca repository pattern + Service 
+ - 3 Controllere (minim); Fiecare Metoda Crud, REST cu date din baza de date. (1p)
+ - Cel puțin 1 relație între tabele din fiecare fel (One to One, Many to Many, One to Many); Folosirea metodelor din Linq: GroupBy, Where, etc; Folosirea Join si Include (1p)
+ - Autentificare + Roluri; Autorizare pe endpointuri în funcție de Roluri; Cel putin 2 Roluri: Admin, User 
+ - Sa se foloseasca repository pattern + Service 
 
 Puncte extra (2-4 pct maxim pentru recuperare puncte prezenta; daca totusi aveti si full prezenta si nu faceti frontend sau aveti lipsa de punctaj in alta parte va adaug punctele extra):
 - Autentificare cu Identity (1 pct) 
