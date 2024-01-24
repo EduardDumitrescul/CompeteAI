@@ -33,7 +33,7 @@
   <!-- Rounds Column -->
   <ng-container matColumnDef="rounds">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Rounds</th>
-    <td mat-cell *matCellDef="let participant">{{participant.roundsPlayed}}</td>
+    <td mat-cell *matCellDef="let participant">{{participant.roundsPlayed | rounds}}</td>
   </ng-container>
 
 

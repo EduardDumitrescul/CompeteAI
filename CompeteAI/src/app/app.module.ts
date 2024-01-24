@@ -22,6 +22,7 @@ import { TournamentsComponent } from './tournaments/tournaments.component';
 import { TournamentEditComponent } from './tournaments/tournament-edit/tournament-edit.component';
 import { TournamentViewComponent } from './tournaments/tournament-view/tournament-view.component';
 import { TournamentParticipantsComponent } from './tournaments/tournament-participants/tournament-participants.component';
+import { RoundsPipe } from './tournaments/tournament-participants/rounds-pipe';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TournamentParticipantsComponent } from './tournaments/tournament-partic
     TournamentEditComponent,
     TournamentViewComponent,
     TournamentParticipantsComponent,
+    RoundsPipe,
   ],
   imports: [
     BrowserModule,
