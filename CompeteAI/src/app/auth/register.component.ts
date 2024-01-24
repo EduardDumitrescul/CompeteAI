@@ -10,7 +10,7 @@ import { RegisterResult } from './register-result';
 @Component({
   selector: 'app-login',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent
   extends BaseFormComponent implements OnInit {
