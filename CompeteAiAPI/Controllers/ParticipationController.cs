@@ -1,6 +1,7 @@
 ﻿using CompeteAiAPI.Data;
 using CompeteAiAPI.Data.DTO;
 using CompeteAiAPI.Data.Models;
+using CompeteAiAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +11,15 @@ namespace CompeteAiAPI.Controllers
     [Route("api/[controller]")]
     public class ParticipationController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
+        private readonly ParticipationRepository _participationRepository;
+        private readonly ResultRepository _resultRepository;
         public ParticipationController(
-            ApplicationDbContext context)
+            ParticipationRepository participationRepository,
+            ResultRepository resultRepository
+            )
         {
-            _context = context;
+            _participationRepository = participationRepository;
+            _resultRepository = resultRepository;
         }
 
         [HttpPut("RegisterUser")]
@@ -42,9 +46,8 @@ namespace CompeteAiAPI.Controllers
                 ParticipationResult = result
             };
 
-            _context.Participations.Add(p);
-            _context.Results.Add(result);
-            _context.SaveChanges();
+            this._participationRepository.add(p);
+            this._resultRepository.add(result);
             return Ok("User registered");
         }
 
@@ -63,15 +66,14 @@ namespace CompeteAiAPI.Controllers
                 RegisteredTournamentId = tournamentId
             };
 
-            _context.Participations.Remove(p);
-            _context.SaveChanges();
+            this._participationRepository.remove(p);
             return Ok("User junregistered");
         }
 
         [HttpGet("IsUserRegistered")]
         public async Task<bool> UserIsRegistered(int userId, int tournamentId)
         {
-            return null != _context.Participations.Find(userId, tournamentId);
+            return this._participationRepository.userIsRegistered(userId, tournamentId);
         }
 
         [HttpGet("Tournament")]
@@ -86,8 +88,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<ParticipationDTO>.CreateAsync(
-                    _context.Participations.AsNoTracking()
-                        .Where(c => c.RegisteredTournamentId.Equals(tournamentId))
+                   this._participationRepository.getByTournament(tournamentId)
                         .Select(c => new ParticipationDTO()
                         {
                            UserId = c.RegisteredUserId,
@@ -118,7 +119,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<ParticipationDTO>.CreateAsync(
-                    _context.Participations.AsNoTracking()
+                    this._participationRepository.getAll()
                         .Select(c => new ParticipationDTO()
                         {
                             UserId = c.RegisteredUserId,

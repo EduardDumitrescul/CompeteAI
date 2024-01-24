@@ -1,5 +1,6 @@
 ﻿using CompeteAiAPI.Data;
 using CompeteAiAPI.Data.Models;
+using CompeteAiAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,36 +10,32 @@ namespace CompeteAiAPI.Controllers
     [ApiController]
     public class ResultController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
+        private readonly ResultRepository _resultRepository;
 
         public ResultController(
-                ApplicationDbContext context
+            ResultRepository resultRepository
             )
         {
-            _context = context;
+            _resultRepository = resultRepository;
         }
 
         [HttpPost]
         public async Task<ActionResult<Result>> PostResult(int participationId, Result result)
         {
-            _context.Results.Add(result);
-            await _context.SaveChangesAsync();
+            this._resultRepository.add(result);
             return CreatedAtAction("GetResult", new { id = result.Id }, result);
         }
 
         [HttpPut("AddWin")]
         public async Task<ActionResult<Result>> AddWin(int userId, int tournamentId)
         {
-            var result = _context.Results
-                .FirstOrDefault(x => x.RegisteredUserId == userId && x.RegisteredTournamentId == tournamentId);
+            var result = this._resultRepository.get(userId, tournamentId);
           
             if(result != null)
             {
                 result.Wins += 1;
                 result.RoundsPlayed += 1;
-                _context.Entry(result).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                this._resultRepository.update(result);
                 return CreatedAtAction("GetResult", new { id = result.Id }, result);
             }
 
@@ -48,14 +45,12 @@ namespace CompeteAiAPI.Controllers
         [HttpPut("AddLoss")]
         public async Task<ActionResult<Result>> AddLoss(int userId, int tournamentId)
         {
-            var result = _context.Results
-                .FirstOrDefault(x => x.RegisteredUserId == userId && x.RegisteredTournamentId == tournamentId);
+            var result = this._resultRepository.get(userId, tournamentId);
 
             if (result != null)
             {
                 result.RoundsPlayed += 1;
-                _context.Entry(result).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                this._resultRepository.update(result);
                 return CreatedAtAction("GetResult", new { id = result.Id }, result);
             }
 
@@ -67,7 +62,7 @@ namespace CompeteAiAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Result>> GetResult(int id)
         {
-            var result = await _context.Results.FindAsync(id);
+            var result =this._resultRepository.get(id);
 
             if (result == null)
             {
@@ -85,23 +80,7 @@ namespace CompeteAiAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(result).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ResultExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            this._resultRepository.update(result);
 
             return NoContent();
         }
@@ -109,14 +88,13 @@ namespace CompeteAiAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DelteResult(int id)
         {
-            var result = await _context.Results.FindAsync(id);
+            var result = _resultRepository.get(id);
             if (result == null)
             {
                 return NotFound();
             }
 
-            _context.Results.Remove(result);
-            await _context.SaveChangesAsync();
+            _resultRepository.delete(result);
 
             return NoContent();
         }
@@ -124,7 +102,7 @@ namespace CompeteAiAPI.Controllers
 
         private bool ResultExists(int id)
         {
-            return _context.Results.Any(e => e.Id == id);
+            return _resultRepository.get(id) != null;
         }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.Extensions.Identity.Core;
 using Microsoft.AspNet.Identity;
+using CompeteAiAPI.Repositories;
 
 namespace CompeteAiAPI.Controllers
 {
@@ -15,16 +16,15 @@ namespace CompeteAiAPI.Controllers
     [Route("api/[controller]")]
     public class TournamentController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly TournamentRepository _tournamentRepository;
 
         public TournamentController(
-            ApplicationDbContext context, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
+           Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
+           TournamentRepository tournamentRepository)
         {
-            _context = context;
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            _tournamentRepository = tournamentRepository;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace CompeteAiAPI.Controllers
         {
 
             return await ApiResult<TournamentDTO>.CreateAsync(
-                    _context.Tournaments.AsNoTracking()
+                   _tournamentRepository.getAll()
                         .Select(c => new TournamentDTO()
                         {
                             Id = c.Id,
@@ -60,7 +60,7 @@ namespace CompeteAiAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tournament>> GetTournament(int id)
         {
-            var city = await _context.Tournaments.FindAsync(id);
+            var city = _tournamentRepository.get(id);
 
             if (city == null)
             {
@@ -94,23 +94,9 @@ namespace CompeteAiAPI.Controllers
                 return Unauthorized();
             }
 
-            _context.Entry(tournament).State = EntityState.Modified;
+            _tournamentRepository.update(tournament);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TournamentExists(id))    
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
 
             return NoContent();
         }
@@ -125,8 +111,7 @@ namespace CompeteAiAPI.Controllers
            
 
 
-            _context.Tournaments.Add(tournament);
-            await _context.SaveChangesAsync();
+           _tournamentRepository.add(tournament);
 
             return CreatedAtAction("GetTournament", new { id = tournament.Id }, tournament);
         }
@@ -135,21 +120,14 @@ namespace CompeteAiAPI.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteTournament(int id)
         {
-            var city = await _context.Tournaments.FindAsync(id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            _context.Tournaments.Remove(city);
-            await _context.SaveChangesAsync();
+           _tournamentRepository.delete(id);
 
             return NoContent();
         }
 
         private bool TournamentExists(int id)
         {
-            return _context.Tournaments.Any(e => e.Id == id);
+            return _tournamentRepository.get(id) != null;   
         }
     }
 }

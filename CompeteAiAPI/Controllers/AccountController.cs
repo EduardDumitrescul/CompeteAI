@@ -11,19 +11,16 @@ namespace CompeteAiAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly JwtHandler _jwtHandler;
 
         public AccountController(
-            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<int>> roleManager,
             JwtHandler jwtHandler
             )
-        {
-            _context = context;
+        { 
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtHandler = jwtHandler;

@@ -1,6 +1,7 @@
 ﻿using CompeteAiAPI.Data;
 using CompeteAiAPI.Data.DTO;
 using CompeteAiAPI.Data.Models;
+using CompeteAiAPI.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +13,14 @@ namespace CompeteAiAPI.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UserRepository _userRepository;
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UsersController(
-            ApplicationDbContext context, 
-            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, 
-            Microsoft.AspNetCore.Identity.RoleManager<IdentityRole<int>> roleManager, 
-            IHttpContextAccessor httpContextAccessor)
+            UserRepository userRepository,
+            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _userRepository = userRepository;
             _userManager = userManager;
         }
 
@@ -84,7 +82,7 @@ namespace CompeteAiAPI.Controllers
             List<ApplicationUser> users = _userManager.Users.ToList();
 
             return await ApiResult<UserDto>.CreateAsync(
-                    _context.Users.AsQueryable()
+                   _userRepository.getAll()
                         .Select(c => new UserDto()
                         {
                             Id = c.Id,
