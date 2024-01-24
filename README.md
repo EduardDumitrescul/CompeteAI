@@ -8,9 +8,9 @@ Orice numar se specifica in cerinte se inmulteste cu numarul de coechipieri (pen
  -Sa se foloseasca repository pattern + Service 
 
 Puncte extra (2-4 pct maxim pentru recuperare puncte prezenta; daca totusi aveti si full prezenta si nu faceti frontend sau aveti lipsa de punctaj in alta parte va adaug punctele extra):
-Autentificare cu Identity (1 pct) 
-Auth cu refresh token (1 pct)
-Paginare in returnarea listelor de date (0.5 pct)
+- Autentificare cu Identity (1 pct) 
+- Auth cu refresh token (1 pct)
+- Paginare in returnarea listelor de date (0.5 pct)
 
 Frontend: (2 pct)
  
