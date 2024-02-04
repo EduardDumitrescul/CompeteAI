@@ -1,4 +1,10 @@
+# Nota
+###### Din cauza unor probleme cu commit-uri care contineau un fisier de peste 100mb si utilizarea unui tool de modificare al commit-urilor, unele foldere si fisiere apar de 2 ori.
+###### Cele doua foldere CompeteAI (frontend) si CompeteAiApi (backend) sunt cele care contin proiectul
+
 # CompeteAI
+
+
 Backend: (4 pct)
 
 Orice numar se specifica in cerinte se inmulteste cu numarul de coechipieri (pentru nota 10 fiecare trebuie sa faca toate cerintele in proiect)
